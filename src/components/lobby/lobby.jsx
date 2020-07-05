@@ -24,10 +24,10 @@ class Lobby extends React.Component {
         <header className="Lobby-header">
           <img src={logo} className="Lobby-logo" alt="logo" />
         </header>
-        {this.state.login_page == true && (
+        {this.state.login_page === true && (
           <Login onChildClick={this.setLoginPage.bind(this)} />
         )}
-        {this.state.login_page == false && (
+        {this.state.login_page === false && (
           <Register onChildClick={this.setLoginPage.bind(this)} />
         )}
       </div>

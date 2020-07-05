@@ -1,9 +1,6 @@
 import React from "react";
 import "./lobby.css";
 class Login extends React.Component {
-  constructor(props) {
-    super(props);
-  }
   render(props) {
     return (
       <form className="Login">

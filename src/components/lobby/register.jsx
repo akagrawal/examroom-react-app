@@ -1,9 +1,5 @@
 import React from "react";
-import { render } from "@testing-library/react";
 class Register extends React.Component {
-  constructor(props) {
-    super(props);
-  }
   render() {
     return (
       <form className="Form-SignIn">
@@ -15,7 +11,7 @@ class Register extends React.Component {
           type="text"
           id="username"
           className="form-control"
-          placeholder="Email address"
+          placeholder="Username"
           required=""
           autofocus=""
         />
