@@ -1,35 +1,51 @@
 import React from "react";
 import "./lobby.css";
-import Register from "./register";
-import logo from "./logo.svg";
-import Login from "./login";
 class Lobby extends React.Component {
   state = {};
   constructor(props) {
-    console.log("constructor");
-    console.log(props);
     super(props);
+    console.log(props);
     this.state = {
-      login_page: true,
-      a: "b",
+      username: this.props.location.userprops.username,
+      socket: this.props.location.userprops.socket,
     };
   }
-  setLoginPage(val) {
-    this.setState({ login_page: val });
+  //TODO:check if already created a room, leave current channel
+  onCreateClick() {
+    console.log(this.props);
+    let roomId = "room" + Math.ceil(Math.random() * 1000); //room123
+    console.log("create is clicked");
+    this.props.history.push({
+      pathname: "/" + roomId,
+      userprops: {
+        username: this.state.username,
+        roomId: roomId,
+        request: "create",
+        socket: this.state.socket,
+      },
+    });
   }
+  onJoinClick() {}
   render() {
-    console.log("lobby rendered");
     return (
-      <div className="Lobby">
-        <header className="Lobby-header">
-          <img src={logo} className="Lobby-logo" alt="logo" />
-        </header>
-        {this.state.login_page === true && (
-          <Login onChildClick={this.setLoginPage.bind(this)} />
-        )}
-        {this.state.login_page === false && (
-          <Register onChildClick={this.setLoginPage.bind(this)} />
-        )}
+      <div className="room">
+        <div className="h-50 p-1">
+          <button
+            type="button"
+            className="h-100 btn btn-outline-dark btn-lg btn-block"
+            onClick={() => this.onCreateClick()}
+          >
+            Create A Room
+          </button>
+        </div>
+        <div className="h-50 p-1">
+          <button
+            type="button"
+            className="h-100 btn btn-outline-dark btn-lg btn-block"
+          >
+            Join A Room
+          </button>
+        </div>
       </div>
     );
   }

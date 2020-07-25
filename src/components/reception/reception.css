@@ -1,0 +1,82 @@
+.Reception {
+  /* text-align: center; */
+  background-color: #282c34;
+  align-items: center;
+  padding-left: 5%;
+  padding-right: 5%;
+  /* overflow: auto; */
+}
+
+.Reception-header {
+  margin-bottom: 10px;
+  min-width: 50vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.Reception-logo {
+  height: 100%;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .Reception-logo {
+    animation: Reception-logo-spin infinite 20s linear;
+  }
+}
+
+@keyframes Reception-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.signin-box {
+  /* margin-left: 5%;
+  margin-right: 5%; */
+  padding-top: 4%;
+  padding-bottom: 4%;
+  background-color: white;
+  align-items: center;
+  /* position: relative; */
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+}
+.signin-box .form-input {
+  position: relative;
+  padding: 15px;
+  width: 60%;
+  box-sizing: border-box;
+  border-radius: 5px;
+  margin-bottom: -2px;
+}
+.checkbox {
+  width: 60%;
+  box-sizing: border-box;
+  /* background-color: red; */
+  align-content: left;
+}
+.checkbox .checkbox-label {
+  position: relative;
+  /* padding-left: 1rem; */
+}
+
+.dummy {
+  min-height: 50vmin;
+}
+.toggle-msg {
+  border-radius: 10px;
+  background-color: rgb(109, 117, 117);
+  color: white;
+  width: 30%;
+  text-align: center;
+  font-size: 20px;
+}

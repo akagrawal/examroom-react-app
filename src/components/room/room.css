@@ -1,0 +1,11 @@
+.room-userlist {
+  width: 20%;
+  height: 25%;
+  top: 20%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  position: absolute;
+  border-radius: 25px;
+  /* align-content: center; */
+  align-items: center;
+}

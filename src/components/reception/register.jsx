@@ -2,44 +2,52 @@ import React from "react";
 class Register extends React.Component {
   render() {
     return (
-      <form className="Form-SignIn">
+      <form className="signin-box">
         <h1 className="h3 mb-3 font-weight-normal">Register</h1>
-        <label for="username" className="sr-only">
+        <label htmlFor="username" className="sr-only">
           Username
         </label>
         <input
           type="text"
           id="username"
-          className="form-control"
+          className="form-input"
           placeholder="Username"
           required=""
-          autofocus=""
+          autoFocus=""
+          onChange={(e) => this.setState({ username: e.target.value })}
         />
-        <label for="inputEmail" className="sr-only">
+        <label htmlFor="inputEmail" className="sr-only">
           Email address
         </label>
         <input
           type="email"
           id="inputEmail"
-          className="form-control"
+          className="form-input"
           placeholder="Email address"
           required=""
-          autofocus=""
+          autoFocus=""
+          onChange={(e) => this.setState({ email: e.target.value })}
         />
-        <label for="inputPassword" className="sr-only">
+        <label htmlFor="inputPassword" className="sr-only">
           Password
         </label>
         <input
           type="password"
           id="inputPassword"
-          className="form-control"
+          className="form-input"
           placeholder="Password"
           required=""
+          onChange={(e) => this.setState({ password: e.target.value })}
         />
         <button
-          className="btn btn-lg btn-primary btn-block"
+          className="btn btn-outline-dark btn-lg btn-block"
           type="button"
-          onClick={() => this.props.onChildClick(false)}
+          style={{
+            marginTop: "20px",
+            marginBottom: "20px",
+            width: "30%",
+          }}
+          onClick={() => this.props.onRegisterClick(this.state)}
         >
           Register
         </button>
@@ -49,13 +57,12 @@ class Register extends React.Component {
             id="login_button"
             className="btn"
             type="button"
-            // id="goto_register1"
+            style={{ color: "orange", fontSize: "25px" }}
             onClick={() => this.props.onChildClick(true)}
           >
             Login
           </button>
         </p>
-        <p className="mt-5 mb-3 text-muted">© 2017-2020</p>
       </form>
     );
   }
