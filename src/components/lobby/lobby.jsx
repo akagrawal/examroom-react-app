@@ -17,15 +17,7 @@ class Lobby extends React.Component {
     console.log(this.props);
     let roomId = "room" + Math.ceil(Math.random() * 1000); //room123
     console.log("create is clicked");
-    this.props.history.push({
-      pathname: "/" + roomId,
-      userprops: {
-        username: this.state.username,
-        roomId: roomId,
-        request: "create",
-        socket: this.state.socket,
-      },
-    });
+    this.enterRoom(roomId, "create")
   }
 
   //TODO:check if already created a room, leave current channel
@@ -37,8 +29,17 @@ class Lobby extends React.Component {
     this.setState({ popup_show: show });
   }
 
-  joinRoom(room_id) {
-    console.log("try to join", room_id);
+  enterRoom(roomId, request) {
+    console.log("try to join", roomId);
+    this.props.history.push({
+      pathname: "/" + roomId,
+      userprops: {
+        username: this.state.username,
+        roomId: roomId,
+        request: request,
+        socket: this.state.socket,
+      },
+    });
   }
 
   render() {
@@ -68,7 +69,7 @@ class Lobby extends React.Component {
               key="join_room_popup"
               show={this.state.popup_show}
               onHide={this.setPopUp.bind(this)}
-              joinRoom={this.joinRoom.bind(this)}
+              joinRoom={this.enterRoom.bind(this)}
             />
           )}
         </div>

@@ -9,43 +9,78 @@ class Room extends React.Component {
     let username = this.props.location.userprops.username;
     let roomId = this.props.location.userprops.roomId;
     let request = this.props.location.userprops.request;
-    let channelInfo = this.createOrJoin(username, roomId, request, socket);
     this.state = {
       socket: socket,
       username: username,
       roomId: roomId,
-      roomChannel: channelInfo.channel,
-      usersList: channelInfo.userList,
+      roomChannel: undefined,
+      usersList: [],
     };
+    this.createOrJoin(request);
     console.log(this.state);
   }
-  createOrJoin(username, roomId, request, socket) {
-    if (request === "create") {
+  createOrJoin(request) {
+      let socket = this.state.socket
+      let username = this.state.username
+      let roomId = this.state.roomId
+      let usersList = []
+
       let roomChannel = socket.channel(roomId, {
         username: username,
         request,
       });
-      roomChannel.join().receive("ok", (msg) => {
-        console.log(username, "joined", roomId, "msg:", msg);
-      });
-      roomChannel.onClose((msg) => console.log(msg));
-      return {
-        channel: roomChannel,
-        userList: [username],
-      };
-    }
 
-    // TODO:check if already in a room
-    // else if (request == "join") {
-    //   let UsersList = getUsersList(roomId);
+      roomChannel.join()
+      .receive("ok", (response) => {
+        console.log(username, "ok joined", response)
+        usersList = response.user_list
+        this.setState({
+          roomChannel: roomChannel,
+          usersList: usersList,
+        });
+      })
+      .receive("error", (errorMessage) => {
+        console.log(`to do: 
+        1. some error pop up
+        2. go back to lobby
+        `,errorMessage)
+      })
+      roomChannel.onClose((closeMessage) => console.log("closeMessage: ",closeMessage));
+      // return {
+      //   channel: roomChannel,
+      //   usersList
+      // };
+
+
+    // if (request === "create") {
+    //   let roomChannel = socket.channel(roomId, {
+    //     username: username,
+    //     request,
+    //   });
+    //   roomChannel.join().receive("ok", (msg) => {
+    //     console.log(username, "joined", roomId, "msg:", msg);
+    //   });
+    //   roomChannel.onClose((msg) => console.log(msg));
+    //   return {
+    //     channel: roomChannel,
+    //     usersList: [username],
+    //   };
     // }
-    else {
-      // do nothing as of now
-    }
+
+    // // TODO:check if already in a room
+    // // else if (request == "join") {
+    // //   let UsersList = getUsersList(roomId);
+    // // }
+    // else {
+    //   // get userslist from backend
+    //   // show user list
+    //   // show self
+
+    // }
   }
   render() {
     return (
-      <div className="room-userlist">
+      <div className="room-userslist">
         <div className="card">
           <div className="card-header"> RoomId: {this.state.roomId} </div>
           <ul className="list-group list-group-flush">

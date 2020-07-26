@@ -7,7 +7,7 @@ class JoinRoomPopUp extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      room_id: null,
+      roomId: null,
     };
   }
 
@@ -36,8 +36,8 @@ class JoinRoomPopUp extends React.Component {
                 type="text"
                 placeholder="Large text"
                 onChange={(e) => {
-                  console.log(e);
-                  this.setState({ room_id: e.target.value });
+                  console.log(e.target.value);
+                  this.setState({ roomId: e.target.value });
                 }}
               />
               <br />
@@ -45,9 +45,17 @@ class JoinRoomPopUp extends React.Component {
             <Button
               variant="primary"
               type="submit"
+              onClick ={
+                 (e) => {
+                  e.preventDefault();
+                  // e.stopPropagation();
+                   console.log("submit clicked", this.state )
+                   this.props.joinRoom(this.state.roomId, "join")
+                  }
+              }
               // onClick={
               //   () => console.log("submit clicked")
-              //   // this.props.joinRoom(this.state.room_id)
+              //   // this.props.joinRoom(this.state.roomId)
               // }
             >
               Join
