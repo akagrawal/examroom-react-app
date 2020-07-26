@@ -1,5 +1,6 @@
 import React from "react";
 import "./lobby.css";
+import JoinRoomPopUp from "../pop_up/join_room_pop_up";
 class Lobby extends React.Component {
   state = {};
   constructor(props) {
@@ -8,6 +9,7 @@ class Lobby extends React.Component {
     this.state = {
       username: this.props.location.userprops.username,
       socket: this.props.location.userprops.socket,
+      popup_show: false,
     };
   }
   //TODO:check if already created a room, leave current channel
@@ -25,7 +27,20 @@ class Lobby extends React.Component {
       },
     });
   }
-  onJoinClick() {}
+
+  //TODO:check if already created a room, leave current channel
+  onJoinClick() {
+    console.log("joining a room");
+    this.setPopUp(true);
+  }
+  setPopUp(show) {
+    this.setState({ popup_show: show });
+  }
+
+  joinRoom(room_id) {
+    console.log("try to join", room_id);
+  }
+
   render() {
     return (
       <div className="room">
@@ -42,9 +57,20 @@ class Lobby extends React.Component {
           <button
             type="button"
             className="h-100 btn btn-outline-dark btn-lg btn-block"
+            onClick={() => this.onJoinClick()}
           >
             Join A Room
           </button>
+        </div>
+        <div>
+          {this.state.popup_show == true && (
+            <JoinRoomPopUp
+              key="join_room_popup"
+              show={this.state.popup_show}
+              onHide={this.setPopUp.bind(this)}
+              joinRoom={this.joinRoom.bind(this)}
+            />
+          )}
         </div>
       </div>
     );

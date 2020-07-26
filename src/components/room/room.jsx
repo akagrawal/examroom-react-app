@@ -20,12 +20,13 @@ class Room extends React.Component {
     console.log(this.state);
   }
   createOrJoin(username, roomId, request, socket) {
-    if (request == "create") {
+    if (request === "create") {
       let roomChannel = socket.channel(roomId, {
         username: username,
+        request,
       });
-      roomChannel.join().receive("ok", () => {
-        console.log(username, "joined", roomId);
+      roomChannel.join().receive("ok", (msg) => {
+        console.log(username, "joined", roomId, "msg:", msg);
       });
       roomChannel.onClose((msg) => console.log(msg));
       return {

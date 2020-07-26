@@ -49,6 +49,8 @@ class Reception extends React.Component {
         //   "inline-block";
         // document.getElementById("login_errormsg").innerHTML = response.msg;
         console.log("reason:", response);
+        // TODO arpit remove this function from here
+        this.onSuccessfulLogin(username);
       });
     console.log(username, password);
   }
