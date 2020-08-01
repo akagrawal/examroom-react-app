@@ -22,6 +22,8 @@ class Room extends React.Component {
       roomId: roomId,
       roomChannel: roomChannel,
       usersList: [],
+      testStarted: false,
+      buttonText: "Start",
     };
     console.log(this.state);
   }
@@ -94,27 +96,34 @@ class Room extends React.Component {
         </div>
         <div className="room-userslist">
           <div className="card">
-            <div
-              className="card-header"
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                justifyContent: "space-between",
-              }}
-            >
-              <h3>RoomId: {this.state.roomId}</h3>
-              <div>
-                <Timer />
+            <div className="card-header">
+              <div
+                className="Title-Start"
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                }}
+              >
+                <h3>RoomId: {this.state.roomId}</h3>
+                <button
+                  type="button"
+                  className="btn btn-outline-success w-40"
+                  onClick={this.startTimer}
+                >
+                  {this.state.buttonText}
+                </button>
               </div>
+              <hr />
+              <Timer></Timer>
             </div>
-            {/* <h4> Time Remaining: 00:00:00</h4> */}
+            <ul className="list-group list-group-flush">
+              {this.state.usersList.map((username) => (
+                <User key={username} username={username} />
+              ))}
+            </ul>
+            <div className="card-footer"></div>
           </div>
-          <ul className="list-group list-group-flush">
-            {this.state.usersList.map((username) => (
-              <User key={username} username={username} />
-            ))}
-          </ul>
-          <div className="card-footer"></div>
         </div>
       </div>
     );
