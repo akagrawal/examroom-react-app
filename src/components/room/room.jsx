@@ -1,97 +1,121 @@
 import React from "react";
 import User from "../user/user";
+import MockTest from "./mock-test";
+import Timer from "./timer";
 import "./room.css";
 class Room extends React.Component {
   state = {};
   constructor(props) {
     super(props);
+    console.log("constructor");
     let socket = this.props.location.userprops.socket;
     let username = this.props.location.userprops.username;
     let roomId = this.props.location.userprops.roomId;
     let request = this.props.location.userprops.request;
+    let roomChannel = socket.channel(roomId, {
+      username: username,
+      request,
+    });
     this.state = {
       socket: socket,
       username: username,
       roomId: roomId,
-      roomChannel: undefined,
+      roomChannel: roomChannel,
       usersList: [],
     };
-    this.createOrJoin(request);
     console.log(this.state);
   }
-  createOrJoin(request) {
-      let socket = this.state.socket
-      let username = this.state.username
-      let roomId = this.state.roomId
-      let usersList = []
 
-      let roomChannel = socket.channel(roomId, {
-        username: username,
-        request,
-      });
-
-      roomChannel.join()
+  componentWillUnmount() {
+    console.log("component will unmount");
+  }
+  componentDidUpdate() {
+    console.log("componentDidUpdate", this.state);
+  }
+  componentDidMount() {
+    let roomChannel = this.state.roomChannel;
+    let username = this.state.username;
+    let usersList = [];
+    roomChannel
+      .join()
       .receive("ok", (response) => {
-        console.log(username, "ok joined", response)
-        usersList = response.user_list
+        console.log(username, "ok joined", response);
+        usersList = response.user_list;
         this.setState({
-          roomChannel: roomChannel,
           usersList: usersList,
         });
+        roomChannel.push("new_user", { body: username });
       })
       .receive("error", (errorMessage) => {
-        console.log(`to do: 
+        console.log(
+          `TODO: 
         1. some error pop up
         2. go back to lobby
-        `,errorMessage)
-      })
-      roomChannel.onClose((closeMessage) => console.log("closeMessage: ",closeMessage));
-      // return {
-      //   channel: roomChannel,
-      //   usersList
-      // };
+        `,
+          errorMessage
+        );
+      });
+    roomChannel.on("new_user", (payload) => {
+      console.log("New User", payload.username, "Joined");
+      let newUser = payload.username;
+      console.log(
+        "add new user: ",
+        newUser,
+        "old user list",
+        this.state.usersList
+      );
+      if (this.state.usersList.indexOf(newUser) === -1) {
+        this.setState({ usersList: [...this.state.usersList, newUser] });
+      }
+    });
 
+    roomChannel.on("start_test", (payload) => {
+      console.log(payload);
+    });
 
-    // if (request === "create") {
-    //   let roomChannel = socket.channel(roomId, {
-    //     username: username,
-    //     request,
-    //   });
-    //   roomChannel.join().receive("ok", (msg) => {
-    //     console.log(username, "joined", roomId, "msg:", msg);
-    //   });
-    //   roomChannel.onClose((msg) => console.log(msg));
-    //   return {
-    //     channel: roomChannel,
-    //     usersList: [username],
-    //   };
-    // }
-
-    // // TODO:check if already in a room
-    // // else if (request == "join") {
-    // //   let UsersList = getUsersList(roomId);
-    // // }
-    // else {
-    //   // get userslist from backend
-    //   // show user list
-    //   // show self
-
-    // }
+    roomChannel.onClose((closeMessage) =>
+      console.log("closeMessage: ", closeMessage)
+    );
   }
-  render() {
+
+  startTest() {
+    this.state.roomChannel.push("start_test", { body: this.state.roomId });
+  }
+
+  render(props) {
+    console.log("render room", this.props);
     return (
-      <div className="room-userslist">
-        <div className="card">
-          <div className="card-header"> RoomId: {this.state.roomId} </div>
+      <div className="room">
+        <div className="mock-test">
+          <MockTest
+            key={this.state.roomId}
+            roomId={this.state.roomId}
+          ></MockTest>
+        </div>
+        <div className="room-userslist">
+          <div className="card">
+            <div
+              className="card-header"
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "space-between",
+              }}
+            >
+              <h3>RoomId: {this.state.roomId}</h3>
+              <div className="timer pl-2 ">
+                <Timer />
+              </div>
+            </div>
+            {/* <h4> Time Remaining: 00:00:00</h4> */}
+          </div>
           <ul className="list-group list-group-flush">
             {this.state.usersList.map((username) => (
               <User key={username} username={username} />
             ))}
           </ul>
+          <div className="card-footer"></div>
         </div>
-        <button type="button" className="btn btn-outline-success btn-block">
-          Start
-        </button>
       </div>
     );
   }

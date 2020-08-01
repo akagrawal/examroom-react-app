@@ -17,7 +17,7 @@ class Lobby extends React.Component {
     console.log(this.props);
     let roomId = "room" + Math.ceil(Math.random() * 1000); //room123
     console.log("create is clicked");
-    this.enterRoom(roomId, "create")
+    this.enterRoom(roomId, "create");
   }
 
   //TODO:check if already created a room, leave current channel
@@ -44,7 +44,7 @@ class Lobby extends React.Component {
 
   render() {
     return (
-      <div className="room">
+      <div className="lobby">
         <div className="h-50 p-1">
           <button
             type="button"
@@ -64,7 +64,7 @@ class Lobby extends React.Component {
           </button>
         </div>
         <div>
-          {this.state.popup_show == true && (
+          {this.state.popup_show === true && (
             <JoinRoomPopUp
               key="join_room_popup"
               show={this.state.popup_show}
