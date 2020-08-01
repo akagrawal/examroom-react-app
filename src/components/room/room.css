@@ -24,3 +24,11 @@
   border: 5px;
   border-style: groove;
 }
+
+.card .card-header .timer {
+  width: 100%;
+  align-items: center;
+  text-align: center;
+  font-size: 40px;
+  font-family: monospace;
+}

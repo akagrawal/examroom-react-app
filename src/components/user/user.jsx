@@ -1,11 +1,22 @@
 import React from "react";
-
+import Card from "react-bootstrap/Card";
 class User extends React.Component {
   render() {
     return (
-      <div className="card" style={{ width: "100%" }}>
-        <li className="list-group-item">{this.props.username}</li>
-      </div>
+      <Card
+        bg={this.props.backGroundColor(this.props.username)}
+        style={{ width: "100%" }}
+        text={
+          this.props.backGroundColor(this.props.username) === "light"
+            ? "dark"
+            : "white"
+        }
+      >
+        <Card.Body>
+          <Card.Title>{this.props.username}</Card.Title>
+          {/* <Card.Text>Desciption of user...</Card.Text> */}
+        </Card.Body>
+      </Card>
     );
   }
 }
