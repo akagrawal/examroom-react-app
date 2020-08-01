@@ -19,7 +19,7 @@ class Reception extends React.Component {
     };
   }
   initSocket() {
-    let socket = new Socket("ws://192.168.43.240:4000/socket", {
+    let socket = new Socket("ws://localhost:4000/socket", {
       params: { user: "123" },
     });
     socket.connect();

@@ -103,7 +103,7 @@ class Room extends React.Component {
               }}
             >
               <h3>RoomId: {this.state.roomId}</h3>
-              <div className="timer pl-2 ">
+              <div>
                 <Timer />
               </div>
             </div>
