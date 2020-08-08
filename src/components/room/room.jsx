@@ -141,7 +141,10 @@ class Room extends React.Component {
         remaining_sec = "0" + remaining_sec;
       }
       let time = remaining_hour + ":" + remaining_min + ":" + remaining_sec;
-      return <div className="timer">{time}</div>;
+      return <div className="timer">
+        <hr style = {{marginBottom: "0px"}}/>
+        {time}
+        </div>;
     }
   }
   getUserBackGroundColor(username) {
@@ -163,34 +166,34 @@ class Room extends React.Component {
         </div>
         <div className="room-userslist">
           <div className="card">
-            <div className="card-header">
+            <div className="card-header pl-1 pr-1 pb-0">
               <div
-                className="Title-Start pl-4 pr-4"
+                className="Title-Start pl-1 pr-1"
                 style={{
                   display: "flex",
                   flexDirection: "row",
-                  justifyContent: "space-between",
+                  justifyContent: "space-around",
                 }}
               >
                 <h3>{this.state.roomId}</h3>
                 <button
                   type="button"
-                  className="btn btn-outline-success w-40"
+                  className="btn btn-outline-success w-40 mb-2"
                   onClick={() => this.handleTestButtonClick()}
                 >
                   {this.state.buttonText}
                 </button>
               </div>
-              <hr />
               {this.Timer()}
             </div>
             <ul className="list-group list-group-flush">
               {this.state.usersList.map((username) => (
+                <div className = "p-1">
                 <User
                   key={username}
                   username={username}
                   backGroundColor={this.getUserBackGroundColor.bind(this)}
-                />
+                /></div>
               ))}
             </ul>
             {/* <div className="card-footer"></div> */}

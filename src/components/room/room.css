@@ -29,6 +29,8 @@
   width: 100%;
   align-items: center;
   text-align: center;
-  font-size: 40px;
+  font-size: 30px;
   font-family: monospace;
+  background: #eff3fe;
+  color: #1e54b7;
 }

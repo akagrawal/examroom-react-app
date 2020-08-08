@@ -5,7 +5,7 @@ class User extends React.Component {
     return (
       <Card
         bg={this.props.backGroundColor(this.props.username)}
-        style={{ width: "100%" }}
+        style={{ width: "100%",padding: "1px"}}
         text={
           this.props.backGroundColor(this.props.username) === "light"
             ? "dark"
